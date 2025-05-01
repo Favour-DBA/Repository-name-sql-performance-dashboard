@@ -1,22 +1,31 @@
 # SQL Performance Dashboard
 
-This project contains a collection of SQL Server scripts for monitoring and analyzing database performance. These scripts are useful for database administrators looking to optimize their systems, troubleshoot issues, and ensure high availability.
+A collection of SQL Server scripts for monitoring and analyzing performance.
+
+---
 
 ## Included Scripts
 
-### 1. `top_slowest_queries.sql`
-Identifies the top 20 slowest queries based on average elapsed CPU time. Helps pinpoint problematic queries for tuning.
+### 1. `blocking_sessions.sql`
+Shows active blocking and blocked sessions. Helps DBAs troubleshoot locking issues in real time.
 
 ### 2. `index_usage_stats.sql`
-Analyzes how indexes are being used across your databases. Great for identifying unused or overused indexes.
+Analyzes index usage statistics to highlight underused, overused, or unused indexes.
 
-### 3. `blocking_sessions.sql`
-Shows currently blocked and blocking sessions. Useful for identifying live locking issues.
+### 3. `top_slowest_queries.sql`
+Identifies the top 20 slowest queries based on average elapsed CPU time. Useful for tuning performance bottlenecks.
+
+---
 
 ## How to Use
-- Run each script in SQL Server Management Studio (SSMS)
-- Review results and take action (e.g. rewrite queries, remove unused indexes, resolve blockers)
+
+- Run each script using SQL Server Management Studio (SSMS)
+- Review the output to take action: kill blockers, drop unused indexes, or rewrite queries
+- Use these tools during tuning, health checks, and incident response
+
+---
 
 ## Author
+
 **Auwalu Favour**  
 [GitHub: @Favour-DBA](https://github.com/Favour-DBA)
