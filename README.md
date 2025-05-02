@@ -22,7 +22,7 @@ CREATE TABLE dbo.EmployeePayroll (
     NetPay DECIMAL(10,2)
 );
 
-
+https://raw.githubusercontent.com/Favour-DBA/sql-performance-dashboard/main/images/employee_payroll_blocking_demo.jpg
 
 INSERT INTO dbo.EmployeePayroll (EmployeeName, PayPeriod, NetPay)
 VALUES 
