@@ -38,9 +38,13 @@ This script monitors session-level blocking by capturing details of blocked and 
 ![EmployeePayroll Blocking Demo](images/employee_payroll_blocking_demo.jpg)
 ---
 
-## Demo: Database Size Summary  
-Screenshot coming soon.
+### *database_size_summary.sql*  
+Summarizes total and used space for each database on the SQL Server instance.
 
+This script retrieves database size, used space, and available free space in megabytes. It’s useful for tracking growth, identifying storage issues early, and supporting capacity planning. The summary helps DBAs understand which databases consume the most space and manage server resources efficiently.
+
+*Screenshot of Execution*  
+![Database Size Summary](images/database_size_summary_demo.jpg)
 ---
 
 ## Demo: Top Slowest Queries  
