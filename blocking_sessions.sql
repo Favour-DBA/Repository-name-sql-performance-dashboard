@@ -1,19 +1,18 @@
--- View currently blocked and blocking sessions
 SELECT 
-    blocking_session_id AS BlockingSession,
-    session_id AS BlockedSession,
-    wait_type,
-    wait_time,
-    wait_resource,
-    DB_NAME(database_id) AS DatabaseName,
-    OBJECT_NAME(p.object_id) AS BlockingObject,
-    r.status,
-    r.command,
+    r.session_id AS BlockedSessionID,
+    r.blocking_session_id AS BlockingSessionID,
+    r.wait_type,
+    r.wait_time,
+    r.wait_resource,
     r.start_time,
-    t.text AS SqlText
+    r.status,
+    DB_NAME(r.database_id) AS database_name,
+    s.host_name,
+    s.program_name,
+    s.login_name,
+    t.text AS running_query
 FROM sys.dm_exec_requests r
-INNER JOIN sys.dm_exec_sessions s ON r.session_id = s.session_id
-LEFT JOIN sys.dm_exec_requests br ON r.blocking_session_id = br.session_id
-LEFT JOIN sys.partitions p ON r.resource_associated_entity_id = p.hobt_id
+JOIN sys.dm_exec_sessions s ON r.session_id = s.session_id
 CROSS APPLY sys.dm_exec_sql_text(r.sql_handle) AS t
-WHERE r.blocking_session_id <> 0;
+WHERE r.blocking_session_id <> 0
+ORDER BY r.wait_time DESC;
