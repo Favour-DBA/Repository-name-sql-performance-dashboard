@@ -1,120 +1,60 @@
-# SQL Performance Dashboard
+# SQL Server Performance Dashboard
 
-A curated collection of SQL Server scripts designed to monitor and troubleshoot performance issues in real-time.
+This project provides a collection of SQL Server scripts designed to help DBAs monitor, troubleshoot, and optimize SQL Server performance. Each script is paired with a real-world example and visual output where available.
 
 ---
 
-## Script Files
+## Script Files 
 
-- **blocking_sessions.sql**  
-  Displays active blocking and blocked sessions in SQL Server. Helps identify real-time locking problems.
-  ## Real-Time Blocking Demo Using EmployeePayroll Table
+### 1. index_usage_stats.sql  
+Reports how indexes are being used. Helps you detect underutilized or unnecessary indexes.
 
-To demonstrate how the blocking_sessions.sql script works in a real-world scenario, i created a realistic EmployeePayroll table and simulated a blocking situation using SQL Server Management Studio (SSMS).
+### 2. blocking_sessions.sql  
+Displays active blocking and blocked sessions. Helps identify real-time locking problems.
 
-### Table Setup
+### 3. database_size_summary.sql  
+Summarizes the size (in MB) of each database across the server. Useful for storage management and capacity planning.
 
-```sql
-CREATE TABLE dbo.EmployeePayroll (
-    PayrollID INT IDENTITY(1,1) PRIMARY KEY,
-    EmployeeName NVARCHAR(100),
-    PayPeriod NVARCHAR(20),
-    NetPay DECIMAL(10,2)
-);
+### 4. top_slowest_queries.sql  
+Lists the top 20 slowest-running queries based on average CPU time. Helps in identifying query performance bottlenecks.
 
-https://raw.githubusercontent.com/Favour-DBA/sql-performance-dashboard/main/images/employee_payroll_blocking_demo.jpg
+---
 
-INSERT INTO dbo.EmployeePayroll (EmployeeName, PayPeriod, NetPay)
-VALUES 
-('Alice Thomas', '2024-12', 3500.00),
-('Brian Walker', '2024-12', 4100.00),
-('Cindy Miller', '2024-12', 3850.00);
-simulating a blocking scenario
+### *index_usage_stats.sql*  
+Reports how indexes are being used. Helps detect underutilized or unnecessary indexes.
 
+This script analyzes index activity by checking metrics like user seeks, scans, lookups, and updates. It helps DBAs identify which indexes are actively used and which ones are not, allowing for smarter tuning decisions or possible cleanup to improve query performance and storage efficiency.
 
-
-Query window 1 ;
-BEGIN TRAN;
-UPDATE dbo.EmployeePayroll
-SET NetPay = 3600.00
-WHERE PayrollID = 1;
--- Do NOT commit yet
-
-
-Query window 2 ;
-UPDATE dbo.EmployeePayroll
-SET NetPay = 3700.00
-WHERE PayrollID = 1;
-
-
-Then i opend a third ssms window and run blocking_sessions.sql;
-
-SELECT
-    r.session_id AS BlockedSessionID,
-    r.blocking_session_id AS BlockingSessionID,
-    r.wait_type,
-    r.wait_time,
-    r.wait_resource,
-    r.start_time,
-    r.status,
-    DB_NAME(r.database_id) AS database_name,
-    s.host_name,
-    s.program_name,
-    s.login_name,
-    t.text AS running_query
-FROM sys.dm_exec_requests r
-JOIN sys.dm_exec_sessions s ON r.session_id = s.session_id
-CROSS APPLY sys.dm_exec_sql_text(r.sql_handle) AS t
-WHERE r.blocking_session_id <> 0
-ORDER BY r.wait_time DESC;
-### Sample Screensho!
-![employeePayroll Blocking Demo](images/employee_payroll_blocking_demo.JPG)
-
-
-
-- **database_size_summary.sql**  
-  Summarizes the size (in MB) of each database across the server. Useful for storage management and capacity planning.
-
-- **index_usage_stats.sql**  
-  Reports how indexes are being used. Helps you detect underutilized or unnecessary indexes.- *index_usage_stats.sql*  
-  Reports how indexes are being used by queries. Helps detect underutilized or unnecessary indexes by analyzing user_seeks, user_scans, user_lookups, and user_updates.
-## Screenshot of Index Usage Query
-The output below shows a real-time execution of our index usage script in SQL Server Management Studio (SSMS).
+*Screenshot of Execution*  
 ![Index Stats Screenshot](images/index_stats_success.jpeg)
-  * Query Used*:
-  ```sql
-  SELECT  
-      OBJECT_NAME(i.object_id) AS table_name,  
-      i.name AS index_name,  
-      i.type_desc AS index_type,  
-      user_seeks,  
-      user_scans,  
-      user_lookups,  
-      user_updates,  
-      last_user_seek,  
-      last_user_scan,  
-      last_user_lookup,  
-      last_user_update  
-  FROM sys.dm_db_index_usage_stats AS S  
-  INNER JOIN sys.indexes AS i  
-      ON s.object_id = i.object_id AND s.index_id = i.index_id  
-  WHERE OBJECTPROPERTY(s.object_id, 'IsUserTable') = 1  
-  ORDER BY user_seeks + user_scans + user_lookups DESC;
 
-- **top_slowest_queries.sql**  
-  Lists the top 20 slowest-running queries based on average CPU time. Helps in identifying query performance bottlenecks.
+
+### *blocking_sessions.sql*  
+Displays active blocking and blocked sessions in SQL Server. Helps identify real-time locking problems.
+
+This script monitors session-level blocking by capturing details of blocked and blocking sessions, including session IDs, wait types, resources being waited on, and running queries. It helps DBAs detect and troubleshoot blocking issues that can degrade performance or halt transactions.
+
+*Screenshot of Execution*  
+![EmployeePayroll Blocking Demo](images/employee_payroll_blocking_demo.jpg)
+---
+
+## Demo: Database Size Summary  
+Screenshot coming soon.
 
 ---
 
-## How to Use
-
-- Run each script in SQL Server Management Studio (SSMS)
-- Analyze the results to take corrective DBA actions
-- Useful for audits, tuning, and system health checks
+## Demo: Top Slowest Queries  
+Screenshot coming soon.
 
 ---
 
-## Author
+## Tools Used
+- SQL Server Management Studio (SSMS)  
+- SQL Server 2019  
+- AdventureWorks2019 sample database  
 
-**Auwalu Favour**  
-[GitHub: @Favour-DBA](https://github.com/Favour-DBA)
+---
+
+## Author  
+*Favour Auwalu*  
+[GitHub Portfolio](https://github.com/Favour-DBA)
