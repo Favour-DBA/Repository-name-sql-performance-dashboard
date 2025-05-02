@@ -67,8 +67,8 @@ JOIN sys.dm_exec_sessions s ON r.session_id = s.session_id
 CROSS APPLY sys.dm_exec_sql_text(r.sql_handle) AS t
 WHERE r.blocking_session_id <> 0
 ORDER BY r.wait_time DESC;
-### Sample Screenshot
-![EmployeePayroll Blocking Demo](images/employee_payroll_blocking_demo.jpg)
+### Sample Screensho!
+![employeePayroll Blocking Demo](images/employee_payroll_blocking_demo.JPG)
 
 
 
