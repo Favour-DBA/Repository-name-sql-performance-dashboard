@@ -15,9 +15,9 @@ A curated collection of SQL Server scripts designed to monitor and troubleshoot 
 - **index_usage_stats.sql**  
   Reports how indexes are being used. Helps you detect underutilized or unnecessary indexes.- *index_usage_stats.sql*  
   Reports how indexes are being used by queries. Helps detect underutilized or unnecessary indexes by analyzing user_seeks, user_scans, user_lookups, and user_updates.
+## Screenshot of Index Usage Query
 
-  *Screenshot of Example *:  
- ![Index Stats Screenshot](images/index_stats_success.jpeg)
+![Index Stats Screenshot](images/index_stats_success.jpeg)
   * Query Used*:
   ```sql
   SELECT  
