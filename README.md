@@ -22,24 +22,34 @@ CREATE TABLE dbo.EmployeePayroll (
     NetPay DECIMAL(10,2)
 );
 
+
+
 INSERT INTO dbo.EmployeePayroll (EmployeeName, PayPeriod, NetPay)
 VALUES 
 ('Alice Thomas', '2024-12', 3500.00),
 ('Brian Walker', '2024-12', 4100.00),
 ('Cindy Miller', '2024-12', 3850.00);
 simulating a blocking scenario
+
+
+
 Query window 1 ;
 BEGIN TRAN;
 UPDATE dbo.EmployeePayroll
 SET NetPay = 3600.00
 WHERE PayrollID = 1;
 -- Do NOT commit yet
+
+
 Query window 2 ;
 UPDATE dbo.EmployeePayroll
 SET NetPay = 3700.00
 WHERE PayrollID = 1;
+
+
 Then i opend a third ssms window and run blocking_sessions.sql;
-SELECT 
+
+SELECT
     r.session_id AS BlockedSessionID,
     r.blocking_session_id AS BlockingSessionID,
     r.wait_type,
@@ -60,6 +70,7 @@ ORDER BY r.wait_time DESC;
 sample screenshot;
 ![EmployeePayroll Blocking Demo](images/employee_payroll_blocking_demo.jpg)
 This demonstrates how the script captures active blocking sessions with details like session IDs, wait type (LCK_M_X), and the SQL query involved.
+
 
 
 
