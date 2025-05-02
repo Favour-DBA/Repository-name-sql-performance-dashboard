@@ -47,9 +47,13 @@ This script retrieves database size, used space, and available free space in meg
 ![Database Size Summary](images/database_size_summary_demo.jpg)
 ---
 
-## Demo: Top Slowest Queries  
-Screenshot coming soon.
+### *top_slowest_queries.sql*  
+Lists the top 20 slowest-running queries based on average execution time.
 
+This script queries SQL Server’s dynamic management views to return queries sorted by their average elapsed time. It helps DBAs identify slow-performing SQL statements that may need to be tuned, rewritten, or indexed for better performance.
+
+*Screenshot of Execution*  
+![Top Slowest Queries](images/top_slowest_queries_demo.jpg)
 ---
 
 ## Tools Used
