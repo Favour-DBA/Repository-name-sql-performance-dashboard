@@ -8,6 +8,58 @@ A curated collection of SQL Server scripts designed to monitor and troubleshoot 
 
 - **blocking_sessions.sql**  
   Displays active blocking and blocked sessions in SQL Server. Helps identify real-time locking problems.
+  ## Real-Time Blocking Demo Using EmployeePayroll Table
+
+To demonstrate how the blocking_sessions.sql script works in a real-world scenario, i created a realistic EmployeePayroll table and simulated a blocking situation using SQL Server Management Studio (SSMS).
+
+### Table Setup
+
+```sql
+CREATE TABLE dbo.EmployeePayroll (
+    PayrollID INT IDENTITY(1,1) PRIMARY KEY,
+    EmployeeName NVARCHAR(100),
+    PayPeriod NVARCHAR(20),
+    NetPay DECIMAL(10,2)
+);
+
+INSERT INTO dbo.EmployeePayroll (EmployeeName, PayPeriod, NetPay)
+VALUES 
+('Alice Thomas', '2024-12', 3500.00),
+('Brian Walker', '2024-12', 4100.00),
+('Cindy Miller', '2024-12', 3850.00);
+simulating a blocking scenario
+Query window 1 ;
+BEGIN TRAN;
+UPDATE dbo.EmployeePayroll
+SET NetPay = 3600.00
+WHERE PayrollID = 1;
+-- Do NOT commit yet
+Query window 2 ;
+UPDATE dbo.EmployeePayroll
+SET NetPay = 3700.00
+WHERE PayrollID = 1;
+Then i opend a third ssms window and run blocking_sessions.sql;
+SELECT 
+    r.session_id AS BlockedSessionID,
+    r.blocking_session_id AS BlockingSessionID,
+    r.wait_type,
+    r.wait_time,
+    r.wait_resource,
+    r.start_time,
+    r.status,
+    DB_NAME(r.database_id) AS database_name,
+    s.host_name,
+    s.program_name,
+    s.login_name,
+    t.text AS running_query
+FROM sys.dm_exec_requests r
+JOIN sys.dm_exec_sessions s ON r.session_id = s.session_id
+CROSS APPLY sys.dm_exec_sql_text(r.sql_handle) AS t
+WHERE r.blocking_session_id <> 0
+ORDER BY r.wait_time DESC;
+sample screenshot
+This demonstrates how the script captures active blocking sessions with details like session IDs, wait type (LCK_M_X), and the SQL query involved.
+
 
 - **database_size_summary.sql**  
   Summarizes the size (in MB) of each database across the server. Useful for storage management and capacity planning.
