@@ -17,8 +17,7 @@ A curated collection of SQL Server scripts designed to monitor and troubleshoot 
   Reports how indexes are being used by queries. Helps detect underutilized or unnecessary indexes by analyzing user_seeks, user_scans, user_lookups, and user_updates.
 
   *Screenshot of Example *:  
-  ![Index Stats Screenshot](images/index_stats_success.jpeg)
-
+ ![Index Stats Screenshot](images/index_stats_success.jpeg)
   * Query Used*:
   ```sql
   SELECT  
