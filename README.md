@@ -60,6 +60,8 @@ Summarizes frequently executed query plans from the SQL Server plan cache.
 
 This script helps DBAs understand which queries run most often, how much CPU they consume, and how long they take on average. It's useful for performance tuning, detecting recompiled plans, and optimizing commonly used procedures.
 
+*Screenshot of Execution*  
+![Plan Cache Summary](images/plan_cache_summary_demo.jpg)
 Screenshot coming soon.
 
 
