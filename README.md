@@ -55,6 +55,13 @@ This script queries SQL Server’s dynamic management views to return queries so
 *Screenshot of Execution*  
 ![Top Slowest Queries](images/top_slowest_queries_demo.jpg)
 ---
+### *plan_cache_summary.sql*  
+Summarizes frequently executed query plans from the SQL Server plan cache.
+
+This script helps DBAs understand which queries run most often, how much CPU they consume, and how long they take on average. It's useful for performance tuning, detecting recompiled plans, and optimizing commonly used procedures.
+
+Screenshot coming soon.
+
 
 ## Tools Used
 - SQL Server Management Studio (SSMS)  
