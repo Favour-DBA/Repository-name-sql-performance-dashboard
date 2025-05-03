@@ -62,7 +62,7 @@ This script helps DBAs understand which queries run most often, how much CPU the
 
 *Screenshot of Execution*  
 ![Plan Cache Summary](images/plan_cache_summary_demo.jpg)
-Screenshot coming soon.
+
 
 
 ## Tools Used
